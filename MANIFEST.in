@@ -1,0 +1,7 @@
+include *.rst
+exclude bootstrap.sh
+exclude buildout.cfg
+exclude requirements.txt
+recursive-include src *
+recursive-exclude src *.pyc *.pyo
+

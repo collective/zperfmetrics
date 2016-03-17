@@ -1,0 +1,39 @@
+<component prefix="zperfmetrics.config">
+  <sectiontype
+      datatype=".PerfmetricsConfig"
+      implements="ZServer.server"
+      name="perfmetrics">
+    <key
+        datatype="string"
+        name="uri"
+        required="yes">
+      <description>
+       URI of statds, i.e.: statsd://localhost:8125
+       </description>
+    </key>
+    <key
+        datatype="boolean"
+        name="hostname"
+        default="on">
+      <description>
+       Add hostname to prefix
+       </description>
+    </key>
+    <key
+        datatype="string"
+        name="before"
+        default="">
+      <description>
+       Add given prefix before hostname
+       </description>
+    </key>
+    <key
+        datatype="string"
+        name="after"
+        default="">
+      <description>
+       Add given prefix after hostname
+       </description>
+    </key>
+  </sectiontype>
+</component>
