@@ -8,15 +8,24 @@ import urlparse
 class PerfmetricsConfig(object):
 
     def __init__(self, config):
-        prefix = ''
-        if config.before:
-            prefix += config.before + '.'
-        if config.hostname:
-            prefix += socket.gethostname() + '.'
-        if config.after:
-            prefix += config.after + '.'
+        self.uri = config.uri
+        self.before = config.before
+        self.after = config.after
+        self.hostname = config.hostname
 
-        url = urlparse.urlparse(config.uri)
+    def prepare(self, *args):
+        pass
+
+    def create(self, *args):
+        prefix = ''
+        if self.before:
+            prefix += self.before + '.'
+        if self.hostname:
+            prefix += socket.gethostname() + '.'
+        if self.after:
+            prefix += self.after + '.'
+        prefix = prefix.strip('.')
+        url = urlparse.urlparse(self.uri)
         if url.query:
             qs = urlparse.parse_qs(url.query)
             preset = qs.get('prefix', [])
@@ -25,9 +34,3 @@ class PerfmetricsConfig(object):
         parts = list(url)
         parts[4] = 'prefix=' + prefix
         set_statsd_client(urlparse.urlunparse(parts))
-
-    def prepare(self, *args):
-        pass
-
-    def create(self, *args):
-        pass

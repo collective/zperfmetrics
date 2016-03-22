@@ -5,7 +5,11 @@ History
 1.0a2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Refactored: ZConfig best practice
+  [jensens]
+
+- Fix: Strip trailing dot from prefix
+  [jensens]
 
 
 1.0a1 (2016-03-22)
