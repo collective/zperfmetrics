@@ -2,7 +2,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.0a1.dev0'
+version = '1.0a1'
 shortdesc = 'Perfmetrics configuration for Zope/Plone.'
 longdesc = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
 longdesc += open(os.path.join(os.path.dirname(__file__), 'CHANGES.rst')).read()
