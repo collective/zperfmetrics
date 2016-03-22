@@ -2,7 +2,7 @@
 History
 =======
 
-1.0a2 (unreleased)
+1.0a2 (2016-03-22)
 ------------------
 
 - Refactored: ZConfig best practice
