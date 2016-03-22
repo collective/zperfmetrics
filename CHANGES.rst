@@ -5,7 +5,8 @@ History
 1.0a1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix: README was wrong.
+  [jensens]
 
 
 1.0a0 (2016-03-22)

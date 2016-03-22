@@ -27,9 +27,9 @@ add to your ``[instance]`` section or the section with ``recipe = plone.recipe.z
     zope-conf-additional =
         <perfmetrics>
             uri statsd://localhost:8125
-            prefixcustombefore MyFancyProject
-            prefixhostname on
-            prefixcustomafter ${:_buildout_section_name_}
+            before MyFancyProject
+            hostname on
+            after ${:_buildout_section_name_}
         </perfmetrics>
     ...
 
@@ -39,15 +39,14 @@ this will result in a prefix ``MyFancyProject.w-plone1.instance01``
 uri
     Full URI of statd.
 
-prefix-custom-before
+before
     Prefix path before the hostname.
 
-prefix-hostname
-    Get hostname and insert into prefix.
+hostname
+    Get hostname and insert into prefix. (Boolean: ``on`` or ``off``)
 
-prefix-custom-after
+after
     Prefix path after the hostname.
-
 
 
 Usage
