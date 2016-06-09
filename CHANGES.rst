@@ -2,7 +2,7 @@
 History
 =======
 
-1.0a3 (unreleased)
+1.0a3 (2016-06-09)
 ------------------
 
 - Measure time a zope request needs.
