@@ -5,7 +5,8 @@ History
 1.0a3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Measure time a zope request needs.
+  [jensens]
 
 
 1.0a2 (2016-03-22)

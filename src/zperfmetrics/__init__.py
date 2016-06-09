@@ -81,6 +81,10 @@ class ZMetric(Metric):
 
     # Metric can also be used as a context manager.
 
+    def __enter__(self):
+        self.start = time()
+        return self
+
     def __exit__(self, _typ, _value, _tb):
         rate = self.rate
         if rate < 1 and self.random() >= rate:

@@ -101,6 +101,14 @@ Usage::
             pass
 
 
+Zope Request Integration
+========================
+
+This package provides subscribers to measure the time a request lasts.
+
+These subscribers are loaded via zcml and are logging under ``zope.request``.
+
+
 Plone Patches
 =============
 

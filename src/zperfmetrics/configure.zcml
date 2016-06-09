@@ -5,4 +5,12 @@
       initialize=".patches.initialize"
       package="."
   />
+  <subscriber
+      for="ZPublisher.interfaces.IPubStart"
+      handler=".subscribers.start_measurement"
+  />
+  <subscriber
+      for="ZPublisher.interfaces.IPubStart"
+      handler=".subscribers.end_measurement"
+  />
 </configure>
