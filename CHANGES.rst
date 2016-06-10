@@ -2,7 +2,7 @@
 History
 =======
 
-1.0a4 (unreleased)
+1.0a4 (2016-06-10)
 ------------------
 
 - Fixes measurements of zope request, also add more detailed metrics.
