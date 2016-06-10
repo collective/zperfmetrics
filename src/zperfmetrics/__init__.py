@@ -6,6 +6,7 @@ from time import time
 from zope.globalrequest import getRequest
 
 import functools
+import random
 import zperfmetrics.patches
 
 zperfmetrics.patches  # flake 8 happiness
@@ -15,9 +16,35 @@ class ZMetric(Metric):
     """Make metric decorator/context managers for Zope Requests.
     """
 
+    def __init__(
+        self,
+        stat=None,
+        rate=1,
+        method=False,
+        count=True,
+        timing=True,
+        timing_format='%s.t',
+        random=random.random,
+        before_hook=None,
+        after_hook=None,
+    ):
+        super(ZMetric, self).__init__(
+            stat=stat,
+            rate=rate,
+            method=method,
+            count=count,
+            timing=timing,
+            timing_format=timing_format,
+            random=random,
+        )
+        self.before_hook = stat
+        self.after_hook = stat
+
     def __call__(self, f):
         """Decorate a function or method so it can send statistics to statsd.
         """
+        if self.before_hook is not None:
+            self.before_hook(self)
         func_name = f.__name__
         func_full_name = (f.__module__, func_name)
 
@@ -77,11 +104,16 @@ class ZMetric(Metric):
                     client.incr(stat, 1, rate, rate_applied=True)
                 return f(*args, **kw)
 
+        if self.after_hook is not None:
+            self.after_hook(self)
+
         return functools.update_wrapper(call_with_metric, f)
 
     # Metric can also be used as a context manager.
 
     def __enter__(self):
+        if self.before_hook is not None:
+            self.before_hook(self)
         self.start = time()
         return self
 
@@ -110,6 +142,9 @@ class ZMetric(Metric):
                                   rate=rate, buf=buf, rate_applied=True)
                 if buf:
                     client.sendbuf(buf)
+
+        if self.after_hook is not None:
+            self.after_hook(self)
 
     @property
     def _request(self):

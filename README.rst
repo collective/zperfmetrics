@@ -112,10 +112,13 @@ These subscribers are loaded via zcml and are logging under ``request.*``:
 ``request.traversal``
     time needed from publication start until traversal is finished.
 
-``request.beforecommit``
-    time needed from publication start until database commit is begins.
+``request.rendering``
+    time needed from traversal end until before commit begin.
 
-``request.success``
+``request.commit``
+    time needed from rendering end until database commit is begins.
+
+``request.all``
     time needed from publication start until while request was processed.
 
 
