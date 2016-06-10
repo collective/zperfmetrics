@@ -104,9 +104,19 @@ Usage::
 Zope Request Integration
 ========================
 
-This package provides subscribers to measure the time a request lasts.
+This package provides subscribers to measure the time a request takes,
+including some points in time between.
 
-These subscribers are loaded via zcml and are logging under ``zope.request``.
+These subscribers are loaded via zcml and are logging under ``request.*``:
+
+``request.traversal``
+    time needed from publication start until traversal is finished.
+
+``request.beforecommit``
+    time needed from publication start until database commit is begins.
+
+``request.success``
+    time needed from publication start until while request was processed.
 
 
 Plone Patches

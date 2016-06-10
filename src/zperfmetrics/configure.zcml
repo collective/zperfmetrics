@@ -7,10 +7,18 @@
   />
   <subscriber
       for="ZPublisher.interfaces.IPubStart"
-      handler=".subscribers.start_measurement"
+      handler=".subscribers.annotate_start_publish"
   />
   <subscriber
-      for="ZPublisher.interfaces.IPubStart"
-      handler=".subscribers.end_measurement"
+      for="ZPublisher.interfaces.IPubAfterTraversal"
+      handler=".subscribers.measurement_after_traversal"
+  />
+  <subscriber
+      for="ZPublisher.interfaces.IPubBeforeCommit"
+      handler=".subscribers.measurement_before_commit"
+  />
+  <subscriber
+      for="ZPublisher.interfaces.IPubSuccess"
+      handler=".subscribers.measurement_request_success"
   />
 </configure>

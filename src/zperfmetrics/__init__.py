@@ -49,7 +49,7 @@ class ZMetric(Metric):
                 statpart = func_full_name
 
             stat = ''
-            request = getRequest()
+            request = self._request
             if request:
                 stat += '.PATH.' + request['PATH_INFO']
                 stat += '.' + statpart
@@ -95,7 +95,7 @@ class ZMetric(Metric):
         client = stack[-1] if stack else client_stack.default
         if client is not None and self.stat:
             buf = []
-            request = getRequest()
+            request = self._request
             if request:
                 stat = '.PATH.' + request['PATH_INFO']
                 stat += '.' + self.stat
@@ -110,6 +110,11 @@ class ZMetric(Metric):
                                   rate=rate, buf=buf, rate_applied=True)
                 if buf:
                     client.sendbuf(buf)
+
+    @property
+    def _request(self):
+        return getattr(self, 'request', getRequest())
+
 
 zmetric = ZMetric()
 

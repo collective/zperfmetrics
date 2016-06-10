@@ -5,7 +5,8 @@ History
 1.0a4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fixes measurements of zope request, also add more detailed metrics.
+  [jensens]
 
 
 1.0a3 (2016-06-09)
