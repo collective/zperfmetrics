@@ -5,7 +5,8 @@ History
 1.0a5 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix: Before/after hooks were not assigned correctly.
+  [jensens]
 
 
 1.0a4 (2016-06-10)

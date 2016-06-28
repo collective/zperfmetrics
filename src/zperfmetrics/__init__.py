@@ -37,8 +37,8 @@ class ZMetric(Metric):
             timing_format=timing_format,
             random=random,
         )
-        self.before_hook = stat
-        self.after_hook = stat
+        self.before_hook = before_hook
+        self.after_hook = after_hook
 
     def __call__(self, f):
         """Decorate a function or method so it can send statistics to statsd.

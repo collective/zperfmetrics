@@ -116,7 +116,7 @@ These subscribers are loaded via zcml and are logging under ``request.*``:
     time needed from traversal end until before commit begin.
 
 ``request.commit``
-    time needed from rendering end until database commit is begins.
+    time needed from rendering end until database commit begins.
 
 ``request.all``
     time needed from publication start until while request was processed.
