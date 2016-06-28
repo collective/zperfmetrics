@@ -2,7 +2,7 @@
 History
 =======
 
-1.0a5 (unreleased)
+1.0a5 (2016-06-28)
 ------------------
 
 - Fix: Before/after hooks were not assigned correctly.
