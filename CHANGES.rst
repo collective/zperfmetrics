@@ -5,6 +5,16 @@ History
 1.0a6 (unreleased)
 ------------------
 
+- Feature: New value publish.commit.
+  Delta time used from publish.beforecommit to request end.
+  [jensens]
+
+- Fix: publish.sum shows now overall time of request processing.
+  [jensens]
+
+- Fix: Update README to reflect last changes.
+  [jensens]
+
 - Use more beautiful paths if VirtualHostMonster is used.
   [syzn]
 

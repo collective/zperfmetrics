@@ -1,3 +1,6 @@
+.. contents:: Table of Contents
+   :depth: 2
+
 Perfmetrics configuration for Zope and Plone
 ============================================
 
@@ -107,19 +110,27 @@ Zope Request Integration
 This package provides subscribers to measure the time a request takes,
 including some points in time between.
 
-These subscribers are loaded via zcml and are logging under ``request.*``:
+These subscribers are loaded via zcml and are logging under ``publish.*``:
 
-``request.traversal``
+``publish.traversal``
     time needed from publication start until traversal is finished.
 
-``request.rendering``
+``publish.rendering``
     time needed from traversal end until before commit begin.
 
-``request.commit``
+``publish.beforecommit``
     time needed from rendering end until database commit begins.
+    This value is a bit fuzzy and should be taken with a grain of salt,
+    because there can be other subscribers to this event which take their time.
+    Since the order of execution of the subscribers is not defined,
+    processing may happen after this measurement
+    Future improvements planned here.
 
-``request.all``
-    time needed from publication start until while request was processed.
+``publish.commit``
+    time needed from rendering end until database commit is done.
+
+``publish.sum``
+    whole time needed from publication start until request is completly processed.
 
 
 Plone Patches
@@ -127,11 +138,12 @@ Plone Patches
 
 This package provides two default patches:
 
-plone.app.theming.transform.ThemeTransform.setupTransform
-    is patched as a basic (path-less) perfmetrics ``Metric`` under the name ``diazo.compile``.
+``diazo.setup``
+    ``plone.app.theming.transform.ThemeTransform.setupTransform`` is patched as a basic (path-less) perfmetrics ``Metric``.
 
-plone.app.theming.transform.ThemeTransform.transformIterable
-    is patched as a zperfmetrics ``ZMetric`` under the name ``diazo.transform``.
+``diazo.transform``
+    ``plone.app.theming.transform.ThemeTransform.transformIterable`` is patched as a zperfmetrics ``ZMetric``.
+    This patch is planned to be removed and replaced by event listeners to every single transform (events available since plone.transformchain 1.2.0).
 
 
 Source Code
@@ -146,3 +158,4 @@ Contributors
 
 - Jens W. Klein <jens@bluedynamics.com>
 
+- Zalán Somogyváry
