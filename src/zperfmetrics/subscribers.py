@@ -20,6 +20,9 @@ def measurement_before_commit(event):
 
 
 def measurement_request_success(event):
+    with ZMetric(stat='publish.committime') as metric:
+        metric.start = event.request._zperfmetrics_start
+        metric.request = event.request
     with ZMetric(stat='publish.sum') as metric:
         metric.start = event.request._zperfmetrics_pubstart
         metric.request = event.request
