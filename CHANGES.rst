@@ -2,7 +2,7 @@
 History
 =======
 
-1.0a6 (unreleased)
+1.0a6 (2016-07-28)
 ------------------
 
 - Feature: New value publish.commit.
