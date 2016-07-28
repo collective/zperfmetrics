@@ -5,7 +5,8 @@ History
 1.0a6 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Use more beautiful paths if VirtualHostMonster is used.
+  [syzn]
 
 
 1.0a5 (2016-06-28)
