@@ -82,7 +82,7 @@ class ZMetric(Metric):
                 if 'VIRTUAL_URL_PARTS' in request and \
                     request['VIRTUAL_URL_PARTS'] and \
                     len(request['VIRTUAL_URL_PARTS']) > 1:
-                        path_info = request['VIRTUAL_URL_PARTS'][0]
+                        path_info = request['VIRTUAL_URL_PARTS'][1]
                         path_info = path_info.replace(".", "_")
                 stat = '.PATH.' + path_info
                 stat += '.' + statpart
@@ -139,7 +139,7 @@ class ZMetric(Metric):
                 if 'VIRTUAL_URL_PARTS' in request and \
                     request['VIRTUAL_URL_PARTS'] and \
                     len(request['VIRTUAL_URL_PARTS']) > 1:
-                        path_info = request['VIRTUAL_URL_PARTS'][0]
+                        path_info = request['VIRTUAL_URL_PARTS'][1]
                         path_info = path_info.replace(".", "_")
                 stat = '.PATH.' + path_info
                 stat = '.PATH.' + request['PATH_INFO']
