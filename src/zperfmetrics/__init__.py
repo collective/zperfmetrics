@@ -142,7 +142,6 @@ class ZMetric(Metric):
                         path_info = request['VIRTUAL_URL_PARTS'][1]
                         path_info = path_info.replace(".", "_")
                 stat = '.PATH.' + path_info
-                stat = '.PATH.' + request['PATH_INFO']
                 stat += '.' + self.stat
             else:
                 stat = self.stat
