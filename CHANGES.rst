@@ -2,7 +2,7 @@
 History
 =======
 
-1.0a7 (unreleased)
+1.0a7 (2016-08-03)
 ------------------
 
 - Fix: virtual path config in ZMetric class.
