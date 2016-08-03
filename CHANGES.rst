@@ -5,7 +5,7 @@ History
 1.0a7 (unreleased)
 ------------------
 
-- Fix: virtual path config in Metric class.
+- Fix: virtual path config in ZMetric class.
   [syzn]
 
 
