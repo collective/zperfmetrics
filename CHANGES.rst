@@ -5,7 +5,8 @@ History
 1.0a7 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix: virtual path config in Metric class.
+  [syzn]
 
 
 1.0a6 (2016-07-28)
