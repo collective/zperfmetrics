@@ -2,7 +2,7 @@
 History
 =======
 
-1.0b3 (unreleased)
+1.0b3 (2016-08-05)
 ------------------
 
 - Enhancement: Introduce after-prefix a top level ``request_lifecycle`` to be consistent with levels.
