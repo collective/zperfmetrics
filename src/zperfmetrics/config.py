@@ -5,6 +5,11 @@ import socket
 import urlparse
 
 
+CONFIG = {
+    'virtualhost': None,
+}
+
+
 class PerfmetricsConfig(object):
 
     def __init__(self, config):
@@ -12,6 +17,7 @@ class PerfmetricsConfig(object):
         self.before = config.before
         self.after = config.after
         self.hostname = config.hostname
+        CONFIG['virtualhost'] = config.virtualhost
 
     def prepare(self, *args):
         pass

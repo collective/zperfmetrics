@@ -32,12 +32,15 @@ add to your ``[instance]`` section or the section with ``recipe = plone.recipe.z
             uri statsd://localhost:8125
             before MyFancyProject
             hostname on
+            virtualhost on
             after ${:_buildout_section_name_}
         </perfmetrics>
     ...
 
 Given this runs on a host called ``w-plone1``,
-this will result in a prefix ``MyFancyProject.w-plone1.instance01``
+this will result in a prefix ``MyFancyProject.w-plone1.instance01``.
+
+With ``virtualhost on`` all zperfmetrics will get a prefix like ``MyFancyProject.w-plone1.instance01.www-theater-at``
 
 uri
     Full URI of statd.
@@ -46,7 +49,12 @@ before
     Prefix path before the hostname.
 
 hostname
-    Get hostname and insert into prefix. (Boolean: ``on`` or ``off``)
+    Get hostname and insert into prefix.
+    (Boolean: ``on`` or ``off``)
+
+virtualhost
+    Get virtualhost and use in ZPerfmetrics after the static prefix.
+    (Boolean: ``on`` or ``off``)
 
 after
     Prefix path after the hostname.
@@ -159,6 +167,21 @@ This package patches:
     ``plone.app.theming.transform.ThemeTransform.setupTransform`` is patched as a basic (path-less) perfmetrics ``Metric``.
     The setup of the transform happens once on startup and is the time needed to create the Diazo xslt from its rules.xml, index.html and related files.
 
+Statd, Graphite & Grafana in Docker
+===================================
+
+Setting up Statsd, Graphite and Grafana can be complex.
+For local testing - but also for production environments - firing up some docker containers comes in handy.
+
+A very minimal version of such a `Statd, Graphite & Grafana in Docker setup <https://github.com/collective/zperfmetrics/tree/master/docker>`_ (`original <https://github.com/Ennexa/docker-graphite>`_) helps getting things initially up and running.
+`Install Docker <https://docs.docker.com/engine/installation/>`_ and `install docker-compose <https://docs.docker.com/compose/install/>`_ (just ``pip install docker-compose``),
+then just clone the repository and in its ``docker`` directory run ``docker-compose up -d``.
+
+Let Zperfmetrics point to ``uri statsd://localhost:8125`` and collect some data.
+Open Grafana in your browser at ``http://localhost:3000``.
+
+Go first to `Grafana Getting Started <http://docs.grafana.org/guides/gettingstarted/>`_,
+the 10 minute video *really helps* to find the hidden part of its UI.
 
 Source Code
 ===========

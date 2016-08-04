@@ -1,0 +1,43 @@
+version: '2'
+# a modified copy of https://github.com/Ennexa/docker-graphite
+
+volumes:
+  grafana:
+  graphite:
+  statsd:
+
+services:
+
+  graphite:
+      build: graphite
+      restart: always
+      ports:
+          - "8000:8000"
+          - "2003:2003"
+          - "2004:2004"
+      volumes:
+          - "graphite:/opt/graphite/storage/whisper"
+
+  statsd:
+      build: statsd
+      restart: always
+      ports:
+          - "8125:8125/udp"
+          - "8126:8126"
+      volumes:
+          - "statsd:/etc/statsd"
+      links:
+          - graphite
+
+  grafana:
+      image: grafana/grafana
+      restart: always
+      ports:
+          - "3000:3000"
+      volumes:
+          - "grafana:/var/lib/grafana"
+      links:
+          - graphite
+      environment:
+          - GF_SERVER_ROOT_URL=http://localhost:3000"
+          - GF_SECURITY_ADMIN_PASSWORD=verysecret

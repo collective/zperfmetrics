@@ -30,12 +30,12 @@
   />
   <subscriber
       for="plone.transformchain.interfaces.IBeforeSingleTransformEvent"
-      handler=".subscribers.annotate_start_transform"
+      handler=".subscribers.annotate_start_single_transform"
       zcml:condition="installed plone.transformchain"
   />
   <subscriber
       for="plone.transformchain.interfaces.IAfterSingleTransformEvent"
-      handler=".subscribers.measurement_after_transform"
+      handler=".subscribers.measurement_after_single_transform"
       zcml:condition="installed plone.transformchain"
   />
   <subscriber

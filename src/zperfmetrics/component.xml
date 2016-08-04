@@ -20,6 +20,14 @@
        </description>
     </key>
     <key
+        datatype="boolean"
+        name="virtualhost"
+        default="on">
+      <description>
+       Add virtualhost before path
+       </description>
+    </key>
+    <key
         datatype="string"
         name="before"
         default="">

@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
-from perfmetrics import Metric
 from perfmetrics import client_stack
+from perfmetrics import Metric
 from perfmetrics import statsd_client_stack
 from time import time
+from urlparse import urlparse
 from zope.globalrequest import getRequest
+from zperfmetrics.config import CONFIG
 
 import functools
 import random
 import zperfmetrics.patches
+
 
 zperfmetrics.patches  # flake 8 happiness
 
@@ -40,6 +43,26 @@ class ZMetric(Metric):
         self.before_hook = before_hook
         self.after_hook = after_hook
 
+    def _handle_virtual_url(self, request, statpart):
+        path_info = request['PATH_INFO']
+        path_tpl = '.PATH.{0}.{1}'
+        if (
+            'VIRTUAL_URL_PARTS' in request and
+            request['VIRTUAL_URL_PARTS'] and
+            len(request['VIRTUAL_URL_PARTS']) > 1
+        ):
+            if CONFIG['virtualhost']:
+                parsed = urlparse(request['VIRTUAL_URL_PARTS'][0])
+                path_tpl = parsed.hostname.replace('.', '_') + '.' + path_tpl
+            path_info = request['VIRTUAL_URL_PARTS'][1]
+            path_info = path_info.replace('.', '_')
+        elif CONFIG['virtualhost']:
+            path_tpl = '__no_virtualhost__.' + path_tpl
+        if not path_info:
+            path_info = '__root__'
+        stat = path_tpl.format(path_info, statpart)
+        return stat
+
     def __call__(self, f):
         """Decorate a function or method so it can send statistics to statsd.
         """
@@ -68,26 +91,16 @@ class ZMetric(Metric):
                 return f(*args, **kw)
 
             if instance_stat:
-                statpart = instance_stat
+                stat = instance_stat
             elif method:
                 cls = args[0].__class__
-                statpart = '.'.join([cls.__module__, cls.__name__, func_name])
+                stat = '.'.join([cls.__module__, cls.__name__, func_name])
             else:
-                statpart = func_full_name
+                stat = func_full_name
 
-            stat = ''
             request = self._request
             if request:
-                path_info = request['PATH_INFO']
-                if 'VIRTUAL_URL_PARTS' in request and \
-                    request['VIRTUAL_URL_PARTS'] and \
-                    len(request['VIRTUAL_URL_PARTS']) > 1:
-                        path_info = request['VIRTUAL_URL_PARTS'][1]
-                        path_info = path_info.replace(".", "_")
-                stat = '.PATH.' + path_info
-                stat += '.' + statpart
-            else:
-                stat = statpart
+                stat = self._handle_virtual_url(request, stat)
 
             if timing:
                 if count:
@@ -135,14 +148,7 @@ class ZMetric(Metric):
             buf = []
             request = self._request
             if request:
-                path_info = request['PATH_INFO']
-                if 'VIRTUAL_URL_PARTS' in request and \
-                    request['VIRTUAL_URL_PARTS'] and \
-                    len(request['VIRTUAL_URL_PARTS']) > 1:
-                        path_info = request['VIRTUAL_URL_PARTS'][1]
-                        path_info = path_info.replace(".", "_")
-                stat = '.PATH.' + path_info
-                stat += '.' + self.stat
+                stat = self._handle_virtual_url(request, self.stat)
             else:
                 stat = self.stat
             if stat:

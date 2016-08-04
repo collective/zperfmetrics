@@ -5,8 +5,22 @@ History
 1.0b2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix: Name of a single transform may contaibn dots.
+  They are now replaced by ``_``.
+  [jensens]
 
+- Fix: The root element of a path was not shown on the same level as all other paths.
+  Now it is shown as ``__root__``
+  [jensens]
+
+- Feature: It was not possible to filter by virtual host in environment with more than one site per Zope.
+  A new configuration option ``virtualhost`` was introduced.
+  If set to on, the virtualhost name will be inserted before ``PATH``.
+  [jensens]
+
+- Support: In order to make a test installation easier,
+  an example docker-compose setup was added to the Github repository together with some documentation in the README.rst.
+  [jensens]
 
 1.0b1 (2016-08-04)
 ------------------

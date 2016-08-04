@@ -62,7 +62,7 @@ def annotate_start_transforms(event):
     event.request._zperfmetrics_transforms_start = time()
 
 
-def annotate_start_transform(event):
+def annotate_start_single_transform(event):
     """annotate start time of a single transform.
     """
     start = time()
@@ -73,13 +73,13 @@ def annotate_start_transform(event):
         event.request._zperfmetrics_transform_start[event.name] = start
 
 
-def measurement_after_transform(event):
+def measurement_after_single_transform(event):
     """record metric of the single transform
     """
     start = event.request._zperfmetrics_transform_start[event.name]
-    stat = 'publish.transform.{0}-{1}'.format(
+    stat = 'publish.transform.single.{0}-{1}'.format(
         event.handler.order,
-        event.name
+        event.name.replace('.', '-')
     )
     with ZMetric(stat=stat) as metric:
         metric.start = start
@@ -90,7 +90,7 @@ def measurement_after_transforms(event):
     """record metric of the all transforms
     """
     start = event.request._zperfmetrics_transforms_start
-    with ZMetric(stat='publish.transforms') as metric:
+    with ZMetric(stat='publish.transform.all') as metric:
         metric.start = start
         metric.request = event.request
 

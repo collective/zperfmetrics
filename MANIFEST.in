@@ -2,6 +2,7 @@ include *.rst
 exclude bootstrap.sh
 exclude buildout.cfg
 exclude requirements.txt
+exclude docker
+recursive-exclude docker *
+recursive-exclude src *.pyc *.pyo 
 recursive-include src *
-recursive-exclude src *.pyc *.pyo
-
