@@ -40,8 +40,6 @@ add to your ``[instance]`` section or the section with ``recipe = plone.recipe.z
 Given this runs on a host called ``w-plone1``,
 this will result in a prefix ``MyFancyProject.w-plone1.instance01``.
 
-With ``virtualhost on`` all zperfmetrics will get a prefix like ``MyFancyProject.w-plone1.instance01.www-theater-at``
-
 uri
     Full URI of statd.
 
@@ -115,6 +113,10 @@ Usage::
 Request Lifecycle Integration
 =============================
 
+All ZPerfmetrics with a request passed in are considered to be under the ``request_lifecycle`` section.
+
+All metrics in here are build like: ``$PREFIX.request_lifecycle.[$VIRTUAL_HOST].$PATH.*``.
+
 Zope
 ----
 
@@ -152,11 +154,11 @@ First, ``publish.beforecommit`` gets less fuzzy because the expensive transforms
 
 Then it introduces new measurements related to ``plone.transformchain``:
 
-``publish.transforms``
+``publish.transform_all``
     time needed for all transforms in the ``plone.transformchain``.
     This usually includes Diazo.
 
-``publish.transform.${ORDER}-${TRANSFORMNAME}``
+``publish.transform_single.${ORDER}-${TRANSFORMNAME}``
     time needed for a specific single transform.
     transforms are ordered and named, both are replaced.
 

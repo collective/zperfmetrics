@@ -5,13 +5,14 @@ History
 1.0b3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Enhancement: Introduce after-prefix a top level ``request_lifecycle`` to be consistent with levels.
+  [jensens]
 
 
 1.0b2 (2016-08-04)
 ------------------
 
-- Fix: Name of a single transform may contaibn dots.
+- Fix: Name of a single transform may contain dots.
   They are now replaced by ``_``.
   [jensens]
 

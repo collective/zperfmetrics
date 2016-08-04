@@ -43,9 +43,9 @@ class ZMetric(Metric):
         self.before_hook = before_hook
         self.after_hook = after_hook
 
-    def _handle_virtual_url(self, request, statpart):
+    def _handle_virtual_url(self, request, stat_postfix):
+        stat = ['request_lifecycle']
         path_info = request['PATH_INFO']
-        path_tpl = '.PATH.{0}.{1}'
         if (
             'VIRTUAL_URL_PARTS' in request and
             request['VIRTUAL_URL_PARTS'] and
@@ -53,15 +53,15 @@ class ZMetric(Metric):
         ):
             if CONFIG['virtualhost']:
                 parsed = urlparse(request['VIRTUAL_URL_PARTS'][0])
-                path_tpl = parsed.hostname.replace('.', '_') + '.' + path_tpl
+                stat.append(parsed.hostname.replace('.', '_'))
             path_info = request['VIRTUAL_URL_PARTS'][1]
-            path_info = path_info.replace('.', '_')
         elif CONFIG['virtualhost']:
-            path_tpl = '__no_virtualhost__.' + path_tpl
+            stat.append('__no_virtualhost__')
         if not path_info:
             path_info = '__root__'
-        stat = path_tpl.format(path_info, statpart)
-        return stat
+        stat.append(path_info.replace('.', '_'))
+        stat.append(stat_postfix)
+        return '.'.join(stat)
 
     def __call__(self, f):
         """Decorate a function or method so it can send statistics to statsd.
@@ -113,8 +113,13 @@ class ZMetric(Metric):
                     return f(*args, **kw)
                 finally:
                     elapsed_ms = int((time() - start) * 1000.0)
-                    client.timing(timing_format % stat, elapsed_ms,
-                                  rate, buf=buf, rate_applied=True)
+                    client.timing(
+                        timing_format % stat,
+                        elapsed_ms,
+                        rate,
+                        buf=buf,
+                        rate_applied=True
+                    )
                     if buf:
                         client.sendbuf(buf)
 
@@ -155,9 +160,14 @@ class ZMetric(Metric):
                 if self.count:
                     client.incr(stat, rate=rate, buf=buf, rate_applied=True)
                 if self.timing:
-                    elapsed = int((time() - self.start) * 1000.0)
-                    client.timing(self.timing_format % stat, elapsed,
-                                  rate=rate, buf=buf, rate_applied=True)
+                    elapsed_ms = int((time() - self.start) * 1000.0)
+                    client.timing(
+                        self.timing_format % stat,
+                        elapsed_ms,
+                        rate=rate,
+                        buf=buf,
+                        rate_applied=True
+                    )
                 if buf:
                     client.sendbuf(buf)
 
