@@ -19,8 +19,9 @@ def measurement_after_traversal(event):
     event.request._zperfmetrics_start = time()
 
 
-def measurement_before_commit(event):
-    """record time needed to publish the request but w/o database writes.
+def measurement_after_base_rendering(event):
+    """record time needed to prepare the request
+    but w/o transforms and database writes.
 
     This is a bit fuzzy, since there maybe more subscribers to this event.
     What we are interested in is the time when all those subscribers are
@@ -39,7 +40,7 @@ def measurement_before_commit(event):
         # some requests do not fire an after traversal event, so we
         # use the pubstart instead
         start = event.request._zperfmetrics_pubstart
-    with ZMetric(stat='publish.beforecommit') as metric:
+    with ZMetric(stat='publish.rendering') as metric:
         metric.start = start
     event.request._zperfmetrics_start = time()
 
@@ -47,7 +48,7 @@ def measurement_before_commit(event):
 def measurement_request_success(event):
     """record overall time needed to publish the request.
     """
-    with ZMetric(stat='publish.commit') as metric:
+    with ZMetric(stat='publish.finalize') as metric:
         metric.start = event.request._zperfmetrics_start
         metric.request = event.request
     with ZMetric(stat='publish.sum') as metric:
@@ -59,6 +60,10 @@ def measurement_request_success(event):
 def annotate_start_transforms(event):
     """annotate start time of all transforms.
     """
+
+    # see docstring of this function above
+    measurement_after_base_rendering(event)
+
     event.request._zperfmetrics_transforms_start = time()
 
 
@@ -89,10 +94,11 @@ def measurement_after_single_transform(event):
 def measurement_after_transforms(event):
     """record metric of the all transforms
     """
+
     start = event.request._zperfmetrics_transforms_start
     with ZMetric(stat='publish.transform_all') as metric:
         metric.start = start
         metric.request = event.request
 
-    # see docstring of this function above
-    measurement_before_commit(event)
+    # reset start to measure db commit time
+    event.request._zperfmetrics_start = time()

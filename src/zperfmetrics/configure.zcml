@@ -16,7 +16,7 @@
   />
   <subscriber
       for="ZPublisher.interfaces.IPubBeforeCommit"
-      handler=".subscribers.measurement_before_commit"
+      handler=".subscribers.measurement_after_base_rendering"
       zcml:condition="not-installed plone.transformchain"
   />
   <subscriber

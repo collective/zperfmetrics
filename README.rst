@@ -131,18 +131,18 @@ These subscribers are loaded via zcml and are logging under ``publish.*``:
 ``publish.rendering``
     time needed from traversal end until before commit begin.
 
-``publish.beforecommit``
-    time needed from rendering end until database commit begins.
     This value is a bit fuzzy and should be taken with a grain of salt,
     because there can be other subscribers to this event which take their time.
     Since the order of execution of the subscribers is not defined,
     processing may happen after this measurement
-    Future improvements planned here.
 
-``publish.commit``
-    time needed from rendering end until database commit is done.
+    If plone tranformchain is active,
+    the rendering time is before transforms are starting.
 
-``publish.sum``
+``publish.finalize``
+    time needed from rendering end (or transform end if plone.transformchain is active) until database commit is done.
+
+``publish_all``
     whole time needed from publication start until request is completly processed.
 
 Plone
@@ -150,7 +150,7 @@ Plone
 
 Installing this package in Plone by depending on ``zperfmetrics[plone]`` forces usage of ``plone.transformchain`` version 1.2 or newer.
 
-First, ``publish.beforecommit`` gets less fuzzy because the expensive transforms (also subscribers to publish.beforecommit) are all done.
+First, ``publish.rendering`` gets less fuzzy because the expensive transforms (also subscribers to publish.beforecommit) are all done.
 
 Then it introduces new measurements related to ``plone.transformchain``:
 
@@ -158,7 +158,7 @@ Then it introduces new measurements related to ``plone.transformchain``:
     time needed for all transforms in the ``plone.transformchain``.
     This usually includes Diazo.
 
-``publish.transform_single.${ORDER}-${TRANSFORMNAME}``
+``publish_transform_single.${ORDER}-${TRANSFORMNAME}``
     time needed for a specific single transform.
     transforms are ordered and named, both are replaced.
 

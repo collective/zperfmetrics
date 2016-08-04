@@ -5,8 +5,8 @@ History
 1.0b4 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Cleanup names, better grouping in order to make graphing easier.
+  [jensens]
 
 1.0b3 (2016-08-05)
 ------------------
