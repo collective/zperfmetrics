@@ -2,7 +2,7 @@
 History
 =======
 
-1.0b3 (2016-08-04)
+1.0b2 (2016-08-04)
 ------------------
 
 - Fix: Name of a single transform may contaibn dots.
