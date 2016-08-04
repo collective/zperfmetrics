@@ -2,7 +2,7 @@
 History
 =======
 
-1.0a9 (unreleased)
+1.0b1 (2016-08-04)
 ------------------
 
 - Added subscribers to ``plone.transformchain`` events.
