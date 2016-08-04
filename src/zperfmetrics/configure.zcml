@@ -1,6 +1,7 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
-    xmlns:five="http://namespaces.zope.org/five">
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:zcml="http://namespaces.zope.org/zcml">
   <five:registerPackage
       initialize=".patches.initialize"
       package="."
@@ -16,9 +17,30 @@
   <subscriber
       for="ZPublisher.interfaces.IPubBeforeCommit"
       handler=".subscribers.measurement_before_commit"
+      zcml:condition="not-installed plone.transformchain"
   />
   <subscriber
       for="ZPublisher.interfaces.IPubSuccess"
       handler=".subscribers.measurement_request_success"
+  />
+  <subscriber
+      for="plone.transformchain.interfaces.IBeforeTransformsEvent"
+      handler=".subscribers.annotate_start_transforms"
+      zcml:condition="installed plone.transformchain"
+  />
+  <subscriber
+      for="plone.transformchain.interfaces.IBeforeSingleTransformEvent"
+      handler=".subscribers.annotate_start_transform"
+      zcml:condition="installed plone.transformchain"
+  />
+  <subscriber
+      for="plone.transformchain.interfaces.IAfterSingleTransformEvent"
+      handler=".subscribers.measurement_after_transform"
+      zcml:condition="installed plone.transformchain"
+  />
+  <subscriber
+      for="plone.transformchain.interfaces.IAfterTransformsEvent"
+      handler=".subscribers.measurement_after_transforms"
+      zcml:condition="installed plone.transformchain"
   />
 </configure>

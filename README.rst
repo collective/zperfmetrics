@@ -104,8 +104,11 @@ Usage::
             pass
 
 
-Zope Request Integration
-========================
+Request Lifecycle Integration
+=============================
+
+Zope
+----
 
 This package provides subscribers to measure the time a request takes,
 including some points in time between.
@@ -132,18 +135,29 @@ These subscribers are loaded via zcml and are logging under ``publish.*``:
 ``publish.sum``
     whole time needed from publication start until request is completly processed.
 
+Plone
+-----
 
-Plone Patches
-=============
+Installing this package in Plone by depending on ``zperfmetrics[plone]`` forces usage of ``plone.transformchain`` version 1.2 or newer.
 
-This package provides two default patches:
+First, ``publish.beforecommit`` gets less fuzzy because the expensive transforms (also subscribers to publish.beforecommit) are all done.
 
-``diazo.setup``
+Then it introduces new measurements related to ``plone.transformchain``:
+
+``publish.transforms``
+    time needed for all transforms in the ``plone.transformchain``.
+    This usually includes Diazo.
+
+``publish.transform.${ORDER}-${TRANSFORMNAME}``
+    time needed for a specific single transform.
+    transforms are ordered and named, both are replaced.
+
+
+This package patches:
+
+``diazo.setup`` metric
     ``plone.app.theming.transform.ThemeTransform.setupTransform`` is patched as a basic (path-less) perfmetrics ``Metric``.
-
-``diazo.transform``
-    ``plone.app.theming.transform.ThemeTransform.transformIterable`` is patched as a zperfmetrics ``ZMetric``.
-    This patch is planned to be removed and replaced by event listeners to every single transform (events available since plone.transformchain 1.2.0).
+    The setup of the transform happens once on startup and is the time needed to create the Diazo xslt from its rules.xml, index.html and related files.
 
 
 Source Code

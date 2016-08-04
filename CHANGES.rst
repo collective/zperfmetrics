@@ -2,11 +2,14 @@
 History
 =======
 
-1.0a8 (unreleased)
+1.0a9 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Added subscribers to ``plone.transformchain`` events.
+  New setup extra ``[plone]``.
+  Removed one patch for diazo transform.
+  Made ``publish.beforecommit`` less fuzzy in Plone.
+  [jensens]
 
 1.0a7 (2016-08-03)
 ------------------

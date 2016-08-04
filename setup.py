@@ -35,6 +35,11 @@ setup(
         'zope.globalrequest',
         'Zope2',
     ],
+    extras_require={
+        'plone': [
+            'plone.transformchain>=1.2.0'
+        ]
+    },
     entry_points="""
     [z3c.autoinclude.plugin]
     target = plone
