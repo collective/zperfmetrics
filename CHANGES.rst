@@ -2,7 +2,7 @@
 History
 =======
 
-1.0b4 (unreleased)
+1.0b4 (2016-08-05)
 ------------------
 
 - Cleanup names, better grouping in order to make graphing easier.
