@@ -2,7 +2,7 @@
 History
 =======
 
-1.0b5 (unreleased)
+1.0b5 (2016-08-05)
 ------------------
 
 - Event better naming in order to be able to group and stack:
