@@ -51,7 +51,7 @@ def measurement_request_success(event):
     with ZMetric(stat='publish.finalize') as metric:
         metric.start = event.request._zperfmetrics_start
         metric.request = event.request
-    with ZMetric(stat='publish.sum') as metric:
+    with ZMetric(stat='publish_all') as metric:
         metric.start = event.request._zperfmetrics_pubstart
         metric.request = event.request
 
@@ -82,7 +82,7 @@ def measurement_after_single_transform(event):
     """record metric of the single transform
     """
     start = event.request._zperfmetrics_transform_start[event.name]
-    stat = 'publish.transform_single.{0}-{1}'.format(
+    stat = 'publish_transform_single.{0}-{1}'.format(
         event.handler.order,
         event.name.replace('.', '-')
     )

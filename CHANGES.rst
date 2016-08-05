@@ -5,8 +5,9 @@ History
 1.0b5 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Event better naming in order to be able to group and stack:
+  Renamed ``publish.sum`` to ``publish_all`` and ``publish.transform_single`` to ``publish_transform_single``.
+  [jensens]
 
 1.0b4 (2016-08-05)
 ------------------
